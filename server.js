@@ -3,17 +3,21 @@ const app = express();
 const AWS = require('./s3.js')
 const Fire = require('./firebase.js')
 // const storage = new AWS()
+// const fire = new Fire(12220);
+const storage = new AWS();
+const fire = new Fire(zipCode=12220)
 
 app.get('/', function (req, res) {
     return res.send('Hello world');
 });
 
 app.get('/issues', function (req, res) {
-    return res.send('Hello world');
+    return res.send(fire.getAllIssues());
    });
+
 app.get('/uploadissue', function (req, res) {
-    const storage = new AWS();
-    const fire = new Fire(zipCode=12220);
+    // const storage = new AWS();
+    // const fire = new Fire(zipCode=12220);
     fire.addIssue(
         1, 
         "uros", 
