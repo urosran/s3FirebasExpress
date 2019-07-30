@@ -1,34 +1,18 @@
 const express = require('express');
+const bodyParser = require('body-parser')
 const app = express();
-const AWS = require('./s3.js')
-const Fire = require('./firebase.js')
-// const storage = new AWS()
-// const fire = new Fire(12220);
-const storage = new AWS();
-const fire = new Fire(zipCode=12220)
+const router = require('./UserRouter')
 
-app.get('/', function (req, res) {
-    return res.send('Hello world');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use('/', router)
+
+app.use('/issues', router)
+app.use('/addissue', router)
+// app.use('/', router)
+
+app.listen(process.env.PORT, function(){
+    console.log("App listening on", process.env.PORT)
 });
 
-app.get('/issues', function (req, res) {
-    return res.send(fire.getAllIssues());
-   });
-
-app.get('/uploadissue', function (req, res) {
-    // const storage = new AWS();
-    // const fire = new Fire(zipCode=12220);
-    fire.addIssue(
-        1, 
-        "uros", 
-        storage.uploadImage("./test.png", "uors.png"),
-        "not started"
-    )
-    return res.send("maybe baby")
-    
-});
-
-
-app.listen(process.env.PORT || 8080, function(){
-    console.log("App listening on port 8080")
-});
