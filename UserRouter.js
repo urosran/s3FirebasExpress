@@ -27,6 +27,7 @@ router.route('/addissue').post(upload.single('image'),  function(req, res, err){
         req.body.zip, 
         req.body.status, 
         req.body.coords)
+        
     res.send(req.body.issueType, 
         req.body.reporterData, 
         req.file.location, 
